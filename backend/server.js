@@ -6,6 +6,7 @@ const cors = require("cors");
 
 // const corsMiddleware = require('./middleware/cors')
 const { uploadsDir } = require('./middleware/upload')
+const pool = require('./database/db/db')
 
 const collectionRoutes = require('./routes/collections')
 const siteDetailsRoutes = require('./routes/siteDetails')

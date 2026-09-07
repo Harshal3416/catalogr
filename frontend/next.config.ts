@@ -22,9 +22,13 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        // Public landing/directory lives at /home — no reason to gate it
+        // behind sign-in. Owners are sent to /admin/products after login
+        // (see NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL), so '/' is free to be
+        // the customer-facing entry point.
         source: '/',
-        destination: '/admin/settings',
-        permanent: false, // use true if you never want a '/' route ever
+        destination: '/home',
+        permanent: true,
       },
     ];
   },

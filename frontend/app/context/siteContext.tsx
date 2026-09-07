@@ -70,9 +70,14 @@ export function SiteProvider({ children }: { children: React.ReactNode }) {
     }
 
     try {
-      const adminData = (await getAdminDetails(currentTenantId)) || {};
-      const siteData = (await getSiteInformation(currentTenantId)) || {};
-      const contactDetails = (await getAdminContactDetails(currentTenantId)) || {};
+      const [adminDataRaw, siteDataRaw, contactDetailsRaw] = await Promise.all([
+        getAdminDetails(currentTenantId),
+        getSiteInformation(currentTenantId),
+        getAdminContactDetails(currentTenantId),
+      ]);
+      const adminData = adminDataRaw || {};
+      const siteData = siteDataRaw || {};
+      const contactDetails = contactDetailsRaw || {};
 
       const fallbackDetails: SiteDetail = {
         tenantid: currentTenantId,

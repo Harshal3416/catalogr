@@ -90,6 +90,13 @@ const STEPS = [
 ───────────────────────────────────────────────────────────── */
 function Header() {
   const router = useRouter();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const goToAdminSettings = () => {
+    setMobileMenuOpen(false);
+    router.push(`/admin/settings`);
+  };
+
   return (
     <header className="bg-white/90 backdrop-blur-md border-b border-gray-100 sticky top-0 z-50 shadow-(--shadow-card)">
       <div className="max-w-6xl mx-auto px-6 h-[70px] flex items-center justify-between">
@@ -117,23 +124,40 @@ function Header() {
           <Link href="#directory" className="px-4 py-2 rounded-full text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">Directory</Link>
           <div className="w-px h-5 bg-gray-200 mx-1" />
           <div
-            onClick={() => router.push(`/admin/settings`)}
-            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-steel-dark text-white text-sm font-semibold hover:bg-gold hover:text-steel-dark transition-all duration-200 shadow-md hover:shadow-(--shadow-gold) hover:-translate-y-0.5"
+            onClick={goToAdminSettings}
+            className="flex items-center gap-2 px-5 py-2.5 rounded-full bg-steel-dark text-white text-sm font-semibold hover:bg-gold hover:text-steel-dark transition-all duration-200 shadow-md hover:shadow-(--shadow-gold) hover:-translate-y-0.5 cursor-pointer"
           >
             <span>✦</span> Create Free Store
           </div>
         </nav>
 
-        {/* Mobile hamburger — interaction handled via CSS peer trick or client component */}
+        {/* Mobile hamburger */}
         <button
           className="md:hidden flex flex-col gap-1.5 p-2 border-none bg-transparent cursor-pointer"
           aria-label="Toggle menu"
+          aria-expanded={mobileMenuOpen}
+          onClick={() => setMobileMenuOpen((open) => !open)}
         >
-          <span className="block w-5 h-0.5 bg-steel-dark rounded" />
-          <span className="block w-5 h-0.5 bg-steel-dark rounded" />
-          <span className="block w-5 h-0.5 bg-steel-dark rounded" />
+          <span className={`block w-5 h-0.5 bg-steel-dark rounded transition-transform duration-200 ${mobileMenuOpen ? "translate-y-2 rotate-45" : ""}`} />
+          <span className={`block w-5 h-0.5 bg-steel-dark rounded transition-opacity duration-200 ${mobileMenuOpen ? "opacity-0" : ""}`} />
+          <span className={`block w-5 h-0.5 bg-steel-dark rounded transition-transform duration-200 ${mobileMenuOpen ? "-translate-y-2 -rotate-45" : ""}`} />
         </button>
       </div>
+
+      {/* Mobile Nav Panel */}
+      {mobileMenuOpen && (
+        <nav className="md:hidden flex flex-col gap-1 px-6 py-4 border-t border-gray-100 bg-white">
+          <Link href="#features" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">Features</Link>
+          <Link href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">How it Works</Link>
+          <Link href="#directory" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">Directory</Link>
+          <div
+            onClick={goToAdminSettings}
+            className="flex items-center justify-center gap-2 mt-2 px-5 py-3 rounded-full bg-steel-dark text-white text-sm font-semibold hover:bg-gold hover:text-steel-dark transition-all duration-200 cursor-pointer"
+          >
+            <span>✦</span> Create Free Store
+          </div>
+        </nav>
+      )}
     </header>
   );
 }
@@ -178,8 +202,7 @@ function Hero() {
           <div className="flex flex-wrap items-center gap-3 mb-12">
             <div
               onClick={() => router.push(`/admin/settings `)}
-
-              className="flex items-center gap-2 bg-gold hover:bg-gold-light text-steel-dark font-bold text-sm px-7 py-4 rounded-full shadow-(--shadow-gold) hover:-translate-y-0.5 transition-all duration-200"
+              className="flex items-center gap-2 bg-gold hover:bg-gold-light text-steel-dark font-bold text-sm px-7 py-4 rounded-full shadow-(--shadow-gold) hover:-translate-y-0.5 transition-all duration-200 cursor-pointer"
             >
               Create Your Free Store →
             </div>
@@ -395,7 +418,7 @@ function HowItWorks() {
               </div>
               <div
                 onClick={() => router.push(`/admin/settings `)}
-                className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-steel-dark font-bold text-sm px-6 py-3 rounded-full transition-all duration-200 shadow-(--shadow-gold)"
+                className="inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-steel-dark font-bold text-sm px-6 py-3 rounded-full transition-all duration-200 shadow-(--shadow-gold) cursor-pointer"
               >
                 Start for free →
               </div>
@@ -605,7 +628,7 @@ function Directory() {
             <span className="text-sm text-steel-mid">Want your business listed here?</span>
             <div
               onClick={() => router.push(`/admin/settings`)}
-              className="bg-steel-dark hover:bg-gold text-white hover:text-steel-dark text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200"
+              className="bg-steel-dark hover:bg-gold text-white hover:text-steel-dark text-sm font-semibold px-5 py-2 rounded-full transition-all duration-200 cursor-pointer"
             >
               Join for free →
             </div>
@@ -637,7 +660,7 @@ function FooterCTA() {
         </p>
         <div
           onClick={() => router.push(`/admin/settings`)}
-          className="inline-flex items-center gap-3 bg-gold hover:bg-gold-light text-steel-dark font-bold text-base px-8 py-4 rounded-full shadow-(--shadow-gold) hover:-translate-y-1 transition-all duration-200"
+          className="inline-flex items-center gap-3 bg-gold hover:bg-gold-light text-steel-dark font-bold text-base px-8 py-4 rounded-full shadow-(--shadow-gold) hover:-translate-y-1 transition-all duration-200 cursor-pointer"
         >
           ✦ Create Your Free Store
         </div>

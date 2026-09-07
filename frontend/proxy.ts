@@ -1,6 +1,8 @@
 import { clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server';
 
-const isAdminRoute = createRouteMatcher(['/', '/admin(.*)']);
+// Only /admin/* (store management) requires sign-in. The public
+// directory/landing at '/' (redirected to /home) and storefronts stay open.
+const isAdminRoute = createRouteMatcher(['/admin(.*)']);
 
 export default clerkMiddleware(async (auth, req) => {
   if (isAdminRoute(req)) {
