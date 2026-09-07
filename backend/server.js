@@ -90,6 +90,13 @@ app.use((err, req, res, next) => {
   next()
 })
 
-app.listen(port, () => {
-  console.log(`Enquiry app listening on port ${port}`)
-})
+// Only start listening when run directly (`node server.js`) — not when
+// required by tests (backend/tests/*.test.js use supertest against `app`
+// without binding a real port).
+if (require.main === module) {
+  app.listen(port, () => {
+    console.log(`Enquiry app listening on port ${port}`)
+  })
+}
+
+module.exports = app

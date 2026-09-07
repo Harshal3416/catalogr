@@ -88,7 +88,7 @@ const STEPS = [
 /* ─────────────────────────────────────────────────────────────
    HEADER
 ───────────────────────────────────────────────────────────── */
-function Header() {
+export function Header() {
   const router = useRouter();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -146,7 +146,7 @@ function Header() {
 
       {/* Mobile Nav Panel */}
       {mobileMenuOpen && (
-        <nav className="md:hidden flex flex-col gap-1 px-6 py-4 border-t border-gray-100 bg-white">
+        <nav data-testid="mobile-nav" className="md:hidden flex flex-col gap-1 px-6 py-4 border-t border-gray-100 bg-white">
           <Link href="#features" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">Features</Link>
           <Link href="#how-it-works" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">How it Works</Link>
           <Link href="#directory" onClick={() => setMobileMenuOpen(false)} className="px-4 py-3 rounded-lg text-sm font-medium text-steel-mid hover:text-steel-dark hover:bg-cream transition-all duration-200">Directory</Link>
